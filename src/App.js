@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
-
+import MyForm from './MyForm';
+import MyList from './MyList';
 function App() {
+  const colors = ['red', 'blue', 'green']
+  const colors2 = [...colors]
+  console.log('colors2=' + colors2)
+  console.log("App called")
+  const commentRef = useRef();
+  const [comments, setcomments] = useState([]) //const comments=[];function setComments()
+  useEffect(() => {//called when comment is updated
+
+    console.log("useEffect:" + comments);
+  }, [comments])
+  function handleClick() {
+    setcomments([...comments, commentRef.current.value])
+    //console.log('handleClick:' + comments);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MyForm handleClick={handleClick} commentRef={commentRef} />
+      <MyList comments={comments} />
     </div>
   );
 }
